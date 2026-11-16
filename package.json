@@ -6,10 +6,15 @@
     "dev": "vitepress dev content --host 127.0.0.1",
     "build": "vitepress build content",
     "preview": "vitepress preview content --host 127.0.0.1",
-    "sync": "node scripts/sync-knowledge.mjs"
+    "sync": "node scripts/sync-knowledge.mjs",
+    "prebuild": "node scripts/generate-archives.mjs",
+    "predev": "node scripts/generate-archives.mjs"
   },
   "devDependencies": {
     "markdown-it-mathjax3": "^4.0.0",
     "vitepress": "1.6.4"
+  },
+  "dependencies": {
+    "three": "0.183.0"
   }
 }

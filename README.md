@@ -27,3 +27,9 @@ npm run preview
 4. Actions 中的 Publish knowledge site 工作流成功后，访问目标地址。
 
 以后推送 `main` 会自动构建和更新网页。仓库只包含本站文档和资源，不包含渲染器构建目录与本机工具。
+
+## 三维档案主页
+
+主页以自行实现的程序化几何生成档案盘，通过 Three.js 渲染。每篇 Markdown 文章对应一个盘，分为五个分类。上下键／滚轮切换文章，左右键切换分类，Enter 查看摘要，Esc 返回。详情支持拖动旋转、分层拆解和阅读跳转。索引可搜索标题与摘要，全文搜索沿用 VitePress。
+
+构建前会自动生成盘片索引。模型、场景、相机运动和终端界面均在本站实现；未包含参考项目 RhineLabUI 的源码、GLB 模型或标志。Three.js 的 MIT 声明见 content/public/licenses/three-MIT.txt。
