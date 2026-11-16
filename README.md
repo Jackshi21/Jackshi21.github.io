@@ -1,5 +1,7 @@
 # Jack · 知识与实践
 
+当前状态与下次继续入口：[进度与续接](PROGRESS.md)。
+
 个人首页与 Raytrace 图形学知识库。目标地址：https://jackshi21.github.io
 
 ## 本地使用

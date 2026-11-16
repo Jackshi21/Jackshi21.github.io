@@ -1,0 +1,86 @@
+# 个人知识库网站：进度与续接
+
+更新时间：2026-11-16（北京时间）。用户要求今晚暂停，明天继续。
+
+## 暂停位置与用户反馈
+
+用户原话：“感觉不太对，但今天先这样，记录进度，明天再来继续。”
+
+当前三维主页仅作为可运行、已部署的第一版，视觉效果尚未获用户认可。不要把构建通过或交互可用当成视觉验收完成。用户尚未具体指出不满意的部分；下次先对照参考和当前效果，明确主要差距，再集中修改，避免继续堆叠功能。
+
+## 项目与部署
+
+- 网站独立仓库：`D:/MyFairy/Jackshi21.github.io`。
+- GitHub：<https://github.com/Jackshi21/Jackshi21.github.io>。
+- 正式网址：<https://jackshi21.github.io/>。
+- 当前三维版链接：<https://jackshi21.github.io/?v=archive-27925c9>。
+- 已部署提交：`27925c9ab8fe5a34e36ec946f55dcfe14dc5b23e`，`Build procedural 3D knowledge archive homepage`。
+- 已确认 GitHub Actions 部署成功，公网首页 HTTP 200 且包含新终端页面。
+- 本次收尾仅记录进度，不再改页面或发起部署；进度记录提交保留在本地。
+- 父目录属于 `Jackshi21/Fairy`。网站是独立嵌套仓库；父仓库本机 `.git/info/exclude` 已忽略 `/Jackshi21.github.io/`，不要把它提交成 Fairy 的嵌套仓库或子模块。
+
+## 需求与参考
+
+- 个人网站用作 Raytrace 图形学知识库的网页查看端。
+- 用户参考视频：<https://www.bilibili.com/video/BV1fWYW6SEw6/>。
+- 视频标题：“【开源】依旧瘫坐眩晕，莱茵生命终端再打磨！打开网页就能玩”。
+- 参考体验页：<https://rhine.lubeiluchen.cc/>；参考项目：<https://github.com/LBEILC/RhineLabUI>。
+- 用户希望每个知识库标题成为一个可选的“盘”，以类似终端的三维阵列作为主页。
+- 用户后续偏好自己重新实现并作修改。已说明 MIT 不强制衍生项目开源，复用或修改仍需保留声明；少量改动不能免除该义务。不要因这次讨论擅自改变仓库公开／私有设置。
+- 曾临时接入参考引擎及 GLB，但在提交、发布前已全部撤下。目前网站采用本站编写的程序化几何、场景、镜头和界面，没有分发参考项目源码、GLB 或标志；Three.js 依赖许可保留。
+
+## 当前已实现
+
+- VitePress 1.6.4 + Vue，Three.js 0.183.0 延迟加载三维场景。
+- 26 篇文档、18 张实验图；文章来自 `D:/raytrace/docs` 的副本。
+- 5 列分类：导览与索引、阅读笔记、实验与验证、实现计划、项目档案。
+- 程序化档案盘：磨砂外壳、双环内构、标签与紧固件；背景为重复排列的可选盘片。
+- 点击选盘、滚轮／方向键翻阅、分类切换、选中抬起与镜头过渡。
+- 读取摘要、拖动旋转、分层拆解／重组、跳转对应完整文章。
+- 标题／摘要索引、VitePress 全文搜索、手机竖屏、减少动效和性能模式。
+- 原阅读页的公式、图片、目录及深浅色主题保留。
+
+## 主要文件
+
+- `content/.vitepress/theme/KnowledgeHome.vue`：终端 UI、状态、键盘、索引、阅读跳转。
+- `content/.vitepress/theme/KnowledgeScene.js`：自行实现的 Three.js 几何、阵列、材质、拾取、镜头、拆解与资源释放。
+- `content/.vitepress/theme/terminal.css`：全屏终端与响应式样式，仅作用于主页。
+- `scripts/generate-archives.mjs`：读取真实 Markdown 标题和摘要，生成盘片索引。
+- `content/.vitepress/theme/knowledge-archives.json`：自动生成的 26 个盘片条目，构建前更新。
+- `scripts/sync-knowledge.mjs`：从 Raytrace 文档覆盖同步；不会自动删除已移除的源文档。
+- `.github/workflows/deploy.yml`：推送 `main` 自动构建、发布 GitHub Pages。
+- `content/public/licenses/three-MIT.txt`：Three.js 许可。
+
+## 已做验证与限制
+
+- 正式构建通过，26 个盘片到文章的目标路径全部存在。
+- 浏览器实际验证点击选盘、键盘切列、标题搜索定位、摘要、拆解、阅读跳转及全文检索。
+- 手机 390 × 844 竖屏检查通过，无横向溢出；文章仍可正常阅读。
+- 最终浏览器场景无新增错误。早期几何名称错误已修复。
+- 构建有 Three.js 动态块超过 500 kB 的大小提示；未造成构建失败，尚未做系统性能评测。
+- 预览服务器会保留旧资源清单。重新 build 后应重启 preview，并在必要时使用新查询参数；仅 reload 曾读到旧资源。
+- GitHub Pages 最初的默认 Jekyll 发布曾覆盖为 README 页面，现已设为 GitHub Actions 并验证修正；用户也曾遇到旧缓存。
+- 尚未对触摸拖动、低端设备帧率、所有屏幕比例和长期内存占用作完整验收。
+
+## 下次继续
+
+1. 先读本文件并检查 Git 状态；本地进度记录提交尚未推送，线上版本仍是 `27925c9`。
+2. 以用户“感觉不太对”为首要待解决事项，先对照参考画面和运动；区分用户实际反馈与自己的推测，必要时只问最关键的视觉差距。
+3. 优先调整盘片形体／材质、阵列密度、镜头构图、抽取节奏和标题关系中最影响效果的部分，不默认本版已经接近目标。
+4. 保留真实文章绑定、原阅读页和可退回的当前版本；改完先浏览器验证再发布。
+
+本地启动：
+
+```powershell
+cd D:/MyFairy/Jackshi21.github.io
+npm run dev
+# 或 npm run build 后 npm run preview
+```
+
+预览截图仍保留在原工作区：
+
+- `D:/raytrace/output/knowledge-terminal-home.jpg`
+- `D:/raytrace/output/knowledge-terminal-detail.jpg`
+- `D:/raytrace/output/knowledge-terminal-mobile.jpg`
+
+参考源码临时副本与制作暂存目录已经清理；本地预览服务已停止。
