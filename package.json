@@ -1,0 +1,15 @@
+{
+  "name": "jackshi21-personal-knowledge-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev content --host 127.0.0.1",
+    "build": "vitepress build content",
+    "preview": "vitepress preview content --host 127.0.0.1",
+    "sync": "node scripts/sync-knowledge.mjs"
+  },
+  "devDependencies": {
+    "markdown-it-mathjax3": "^4.0.0",
+    "vitepress": "1.6.4"
+  }
+}
