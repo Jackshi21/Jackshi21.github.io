@@ -3,9 +3,10 @@
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
+import { ArchiveMotion, cellKey, COLUMN_PITCH, ROW_PITCH, slotPosition, wrap } from './archive-motion.mjs'
 
 const smooth = (a, b, dt, speed = 6) => THREE.MathUtils.lerp(a, b, 1 - Math.exp(-speed * dt))
-const wrap = (i, n) => ((i % n) + n) % n
 
 export class KnowledgeScene {
   constructor(host, records, columns, onSelect, onHover) {
@@ -17,7 +18,8 @@ export class KnowledgeScene {
     this.selected = 0
     this.detail = 0
     this.detailTarget = 0
-    this.lift = 0
+    this.motion = new ArchiveMotion(this.groups)
+    this.cards = new Map()
     this.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
     this.disposed = false
     this.resources = new Set()
@@ -62,9 +64,11 @@ export class KnowledgeScene {
     floor.position.y = -.08
     floor.receiveShadow = true
     this.scene.add(floor)
-    this.createArray()
     this.createDisc()
-    this.select(0, true)
+    this.template = this.disc
+    this.scene.remove(this.template)
+    this.createArray()
+    this.select(0, null, true)
     this.resize()
     this.bindEvents()
     this.resizeObserver = new ResizeObserver(() => this.resize())
@@ -75,31 +79,58 @@ export class KnowledgeScene {
   geometry(value) { this.resources.add(value); return value }
   material(value) { this.resources.add(value); return value }
   createArray() {
-    this.cells = []
-    for (let lane = -4; lane < this.groups.length + 4; lane++) {
-      for (let row = -12; row < 20; row++) {
-        const group = this.groups[wrap(lane,this.groups.length)]
-        this.cells.push({lane,row,index:group[wrap(row,group.length)]})
-      }
+    this.cells = Array.from({length:13*32},()=>({lane:0,row:0,index:0}))
+    // Resting, rising and returning cards use exactly the same geometry and surfaces.
+    const atlasCanvas=document.createElement('canvas')
+    this.atlasColumns=4
+    this.atlasRows=Math.ceil(this.records.length/this.atlasColumns)
+    atlasCanvas.width=this.atlasColumns*512
+    atlasCanvas.height=this.atlasRows*200
+    const atlasContext=atlasCanvas.getContext('2d')
+    this.records.forEach((record,index)=>{
+      this.drawLabel(record)
+      atlasContext.drawImage(this.labelCanvas,(index%4)*512,Math.floor(index/4)*200,512,200)
+    })
+    this.atlas=new THREE.CanvasTexture(atlasCanvas)
+    this.atlas.colorSpace=THREE.SRGBColorSpace
+    this.atlas.anisotropy=Math.min(8,this.renderer.capabilities.getMaxAnisotropy())
+    this.resources.add(this.atlas)
+    const batches=new Map()
+    for(const part of this.template.children) {
+      part.updateMatrix()
+      const source=part.geometry.index?part.geometry.toNonIndexed():part.geometry.clone()
+      source.applyMatrix4(part.matrix)
+      if(!batches.has(part.material))batches.set(part.material,[])
+      batches.get(part.material).push(source)
     }
-    const shell = this.material(new THREE.MeshStandardMaterial({color:'#e1d8c8', roughness:.44, metalness:.06}))
-    const edge = this.material(new THREE.MeshStandardMaterial({color:'#f5f0e5', roughness:.32, metalness:.05}))
-    const ring = this.material(new THREE.MeshStandardMaterial({color:'#c8b7a0', roughness:.43, metalness:.18}))
     this.layers = []
-    const add = (geometry, material, offset) => {
+    for(const [sourceMaterial,pieces] of batches) {
+      const geometry=this.geometry(mergeGeometries(pieces))
+      pieces.forEach(piece=>piece.dispose())
+      const isLabel=sourceMaterial.map===this.labelTexture
+      let material=sourceMaterial
+      if(isLabel) {
+        material=this.material(sourceMaterial.clone())
+        material.map=this.atlas
+        this.labelRects=new THREE.InstancedBufferAttribute(new Float32Array(this.cells.length*4),4)
+        this.labelRects.setUsage(THREE.DynamicDrawUsage)
+        geometry.setAttribute('archiveLabelRect',this.labelRects)
+        material.onBeforeCompile=shader=>{
+          shader.vertexShader='attribute vec4 archiveLabelRect;\n'+shader.vertexShader
+          shader.vertexShader=shader.vertexShader.replace('#include <uv_vertex>','#include <uv_vertex>\nvMapUv = vMapUv * archiveLabelRect.zw + archiveLabelRect.xy;')
+        }
+        material.customProgramCacheKey=()=> 'knowledge-label-atlas-v1'
+      }
       const inst = new THREE.InstancedMesh(geometry,material,this.cells.length)
       inst.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
-      inst.castShadow = offset.z === 0
+      inst.castShadow = material.transmission===undefined || material.transmission===0
       inst.receiveShadow = true
       inst.frustumCulled = false
-      this.layers.push({mesh:inst,offset})
+      this.layers.push({mesh:inst})
       this.scene.add(inst)
     }
-    add(this.geometry(new RoundedBoxGeometry(3.65,4.5,.28,2,.07)),shell,{x:0,y:2.25,z:0})
-    add(this.geometry(new RoundedBoxGeometry(3.72,.13,.34,2,.04)),edge,{x:0,y:4.48,z:0})
-    add(this.geometry(new THREE.TorusGeometry(1.0,.095,8,40)),ring,{x:-.35,y:2.0,z:.19})
-    add(this.geometry(new THREE.TorusGeometry(.48,.07,8,32)),ring,{x:1,y:3.17,z:.19})
     this.dummy = new THREE.Object3D()
+    this.cardMatrix = new THREE.Matrix4()
   }
   createDisc() {
     this.disc = new THREE.Group()
@@ -163,22 +194,53 @@ export class KnowledgeScene {
     c.fillStyle='#7e8175';c.fillRect(0,377,1024,3)
     this.labelTexture.needsUpdate=true
   }
-  select(index, immediate=false) {
+  ensureCard(entry) {
+    const key=cellKey(entry.cell)
+    if(this.cards.has(key))return this.cards.get(key)
+    const group=this.template.clone(true)
+    group.userData.archiveCell={...entry.cell}
+    group.userData.archiveIndex=entry.index
+    const label=group.children.find(part=>part.material.map===this.labelTexture)
+    const texture=this.atlas.clone()
+    texture.repeat.set(1/this.atlasColumns,1/this.atlasRows)
+    texture.offset.set((entry.index%this.atlasColumns)/this.atlasColumns,1-(Math.floor(entry.index/this.atlasColumns)+1)/this.atlasRows)
+    texture.needsUpdate=true
+    label.material=label.material.clone()
+    label.material.map=texture
+    const holder=new THREE.Group()
+    holder.add(group)
+    const card={group,holder,entry,explode:0,explodeTarget:0,labelMaterial:label.material,labelTexture:texture}
+    this.cards.set(key,card)
+    this.scene.add(holder)
+    return card
+  }
+  releaseCard(key,card) {
+    this.scene.remove(card.holder)
+    card.labelTexture.dispose()
+    card.labelMaterial.dispose()
+    this.cards.delete(key)
+  }
+  select(index, navigation, immediate=false) {
+    const entry=this.motion.select(index,navigation,immediate)
+    const card=this.ensureCard(entry)
+    this.disc=card.group
     this.selected=index
-    this.lane=this.groups.findIndex(g=>g.includes(index))
-    this.row=this.groups[this.lane].indexOf(index)
-    this.targetX=(this.lane-2)*4.7
-    this.targetZ=-this.row*.57
-    this.pulse=performance.now()/1000
-    this.drawLabel(this.records[index])
+    this.lane=entry.cell.lane
+    this.row=entry.cell.row
+    const position=slotPosition(entry.cell)
+    this.targetX=position.x
+    this.targetZ=position.z
     if(immediate) {
-      this.disc.position.set(this.targetX,1.1,this.targetZ)
+      card.holder.position.set(this.targetX,entry.lift,this.targetZ)
       this.camera.position.set(this.targetX-14,15,this.targetZ+21)
       this.cameraAim.set(this.targetX+1,2,this.targetZ-2)
     }
   }
-  setDetail(value) { this.detailTarget=value?1:0; if(!value)this.explodeTarget=0 }
-  setExploded(value) { this.explodeTarget=value?1:0 }
+  setDetail(value) {
+    this.detailTarget=value?1:0
+    if(!value)for(const card of this.cards.values())card.explodeTarget=0
+  }
+  setExploded(value) { this.cards.get(cellKey(this.motion.cell)).explodeTarget=value?1:0 }
   setReduced(value) { this.reduced=value }
   setQuality(low) {
     this.renderer.setPixelRatio(Math.min(devicePixelRatio,low?1:1.5))
@@ -196,8 +258,12 @@ export class KnowledgeScene {
     const box=this.host.getBoundingClientRect()
     this.pointer.set((x-box.left)/box.width*2-1,-(y-box.top)/box.height*2+1)
     this.ray.setFromCamera(this.pointer,this.camera)
-    const hit=this.ray.intersectObjects([this.layers[0].mesh,this.disc],true)[0]
-    return hit ? hit.instanceId===undefined ? this.selected : this.cells[hit.instanceId].index : null
+    const hit=this.ray.intersectObjects([this.layers[0].mesh,...[...this.cards.values()].map(card=>card.group)],true)[0]
+    if(!hit)return null
+    if(hit.instanceId!==undefined)return {index:this.cells[hit.instanceId].index,cell:{lane:this.cells[hit.instanceId].lane,row:this.cells[hit.instanceId].row}}
+    let object=hit.object
+    while(object&&!object.userData.archiveCell)object=object.parent
+    return object?{index:object.userData.archiveIndex,cell:{...object.userData.archiveCell}}:null
   }
   bindEvents() {
     const canvas=this.renderer.domElement, signal=this.events.signal
@@ -208,9 +274,9 @@ export class KnowledgeScene {
         this.disc.rotation.y+=e.movementX*.007
         this.disc.rotation.x=THREE.MathUtils.clamp(this.disc.rotation.x+e.movementY*.004,-.45,.45)
       } else if(!down) {
-        const index=this.pick(e.clientX,e.clientY)
-        canvas.style.cursor=index===null?'grab':'pointer'
-        this.onHover(index)
+        const picked=this.pick(e.clientX,e.clientY)
+        canvas.style.cursor=picked===null?'grab':'pointer'
+        this.onHover(picked?.index??null)
       }
     },{signal})
     canvas.addEventListener('pointerup',e=>{
@@ -218,7 +284,7 @@ export class KnowledgeScene {
       const dx=e.clientX-down.x,dy=e.clientY-down.y
       down=null
       if(this.detailTarget)return
-      if(Math.hypot(dx,dy)<8) {const index=this.pick(e.clientX,e.clientY);if(index!==null)this.onSelect(index)}
+      if(Math.hypot(dx,dy)<8) {const picked=this.pick(e.clientX,e.clientY);if(picked)this.onSelect(picked.index,{cell:picked.cell})}
       else if(Math.abs(dx)>Math.abs(dy))this.navigate('lane',dx>0?-1:1)
       else this.navigate('row',dy>0?-1:1)
     },{signal})
@@ -232,9 +298,8 @@ export class KnowledgeScene {
     },{signal,passive:false})
   }
   navigate(axis,direction) {
-    const lane=axis==='lane'?wrap(this.lane+direction,this.groups.length):this.lane
-    const row=axis==='row'?wrap(this.row+direction,this.groups[lane].length):Math.min(this.row,this.groups[lane].length-1)
-    this.onSelect(this.groups[lane][row])
+    const next=this.motion.navigation(axis,direction)
+    this.onSelect(next.index,next.navigation)
   }
   render(now) {
     if(this.disposed)return
@@ -244,16 +309,17 @@ export class KnowledgeScene {
     if(document.hidden)return
     const speed=this.reduced?100:6
     this.detail=smooth(this.detail,this.detailTarget,dt,speed*.65)
-    this.lift=smooth(this.lift,this.detailTarget?3.1:1.1,dt,speed)
-    this.explode=smooth(this.explode,this.explodeTarget,dt,speed)
-    this.disc.position.x=smooth(this.disc.position.x,this.targetX,dt,speed)
-    this.disc.position.z=smooth(this.disc.position.z,this.targetZ,dt,speed)
-    this.disc.position.y=this.lift
-    if(!this.detailTarget) {
-      this.disc.rotation.x=smooth(this.disc.rotation.x,0,dt,speed)
-      this.disc.rotation.y=smooth(this.disc.rotation.y,0,dt,speed)
+    for(const card of this.cards.values()) {
+      const inspecting=card.entry===this.motion.active&&this.detailTarget
+      card.explode=smooth(card.explode,inspecting?card.explodeTarget:0,dt,speed)
+      if(!inspecting) {
+        card.group.rotation.x=smooth(card.group.rotation.x,0,dt,speed*1.5)
+        card.group.rotation.y=smooth(card.group.rotation.y,0,dt,speed*1.5)
+      }
+      card.entry.holdLower=!inspecting&&(Math.abs(card.group.rotation.x)+Math.abs(card.group.rotation.y)>.008||card.explode>.008)
+      for(const part of card.group.children)part.position.z=part.userData.baseZ+card.explode*part.userData.part*.33
     }
-    for(const part of this.parts)part.position.z=part.userData.baseZ+this.explode*part.userData.part*.33
+    this.motion.step(dt,Boolean(this.detailTarget),this.reduced)
     const portrait=this.camera.aspect<1
     const s=this.detail
     const defaultDistance=portrait?32:21
@@ -264,26 +330,48 @@ export class KnowledgeScene {
     this.camera.lookAt(this.cameraAim)
     this.key.position.set(this.targetX-10,20,this.targetZ+8)
     this.key.target.position.set(this.targetX,0,this.targetZ)
-    const age=now/1000-this.pulse
+    for(const [key,card] of this.cards) {
+      if(!this.motion.entries.has(key)) {this.releaseCard(key,card);continue}
+      const position=slotPosition(card.entry.cell)
+      const field=row=>this.motion.field(card.entry.cell.lane,row,this.reduced)*(1-this.detail)
+      const wave=field(card.entry.cell.row)
+      const slope=(field(card.entry.cell.row+.5)-field(card.entry.cell.row-.5))/ROW_PITCH
+      // A disc only moves vertically above its own physical slot, including while returning.
+      card.holder.position.set(position.x,wave+card.entry.lift,position.z)
+      card.holder.rotation.x=THREE.MathUtils.clamp(slope*.035,-.035,.035)
+    }
+    const centerLane=Math.round(this.cameraAim.x/COLUMN_PITCH)+2
+    const centerRow=Math.round(-this.cameraAim.z/ROW_PITCH)
     for(let i=0;i<this.cells.length;i++) {
-      const cell=this.cells[i],x=(cell.lane-2)*4.7,z=-cell.row*.57
-      const distance=Math.hypot((x-this.targetX)*.45,z-this.targetZ)
-      const wave=this.reduced?0:Math.sin(distance*1.4-age*5)*Math.exp(-Math.abs(distance-age*3)*1.2)*Math.exp(-age*.6)*.12
-      const hidden=cell.lane===this.lane&&cell.row===this.row
+      const cell=this.cells[i]
+      cell.lane=centerLane+Math.floor(i/32)-6
+      cell.row=centerRow+i%32-16
+      const group=this.groups[wrap(cell.lane,this.groups.length)]
+      cell.index=group[wrap(cell.row,group.length)]
+      const position=slotPosition(cell)
+      const field=(row)=>this.motion.field(cell.lane,row,this.reduced)*(1-this.detail)
+      const wave=field(cell.row)
+      const slope=(field(cell.row+.5)-field(cell.row-.5))/ROW_PITCH
+      const hidden=this.motion.entries.has(cellKey(cell))
+      this.dummy.position.set(position.x,wave-this.detail*7,position.z)
+      this.dummy.rotation.set(THREE.MathUtils.clamp(slope*.035,-.035,.035),0,0)
+      this.dummy.scale.setScalar(hidden?0:1)
+      this.dummy.updateMatrix()
       for(const layer of this.layers) {
-        this.dummy.position.set(x+layer.offset.x,wave+layer.offset.y-this.detail*7,z+layer.offset.z)
-        this.dummy.scale.setScalar(hidden?0:1)
-        this.dummy.updateMatrix()
         layer.mesh.setMatrixAt(i,this.dummy.matrix)
       }
+      this.labelRects.setXYZW(i,(cell.index%this.atlasColumns)/this.atlasColumns,1-(Math.floor(cell.index/this.atlasColumns)+1)/this.atlasRows,1/this.atlasColumns,1/this.atlasRows)
     }
+    this.labelRects.needsUpdate=true
     for(const layer of this.layers)layer.mesh.instanceMatrix.needsUpdate=true
+    this.layers[0].mesh.computeBoundingSphere()
     this.renderer.render(this.scene,this.camera)
   }
   dispose() {
     this.disposed=true
     cancelAnimationFrame(this.frame)
     this.events.abort();this.resizeObserver.disconnect()
+    for(const [key,card] of this.cards)this.releaseCard(key,card)
     for(const resource of this.resources)resource.dispose()
     this.environment.dispose();this.key.shadow.map?.dispose()
     this.renderer.dispose();this.renderer.forceContextLoss();this.renderer.domElement.remove()

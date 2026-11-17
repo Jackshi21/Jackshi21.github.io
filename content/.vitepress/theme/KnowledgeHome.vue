@@ -25,16 +25,17 @@ const hoverRecord = computed(() => hovered.value === null ? null : archive.recor
 const matches = computed(() => archive.records.map((r,i) => ({...r,index:i})).filter(r => (category.value === '全部' || r.category === category.value) && `${r.title} ${r.en} ${r.abstract}`.toLowerCase().includes(query.value.toLowerCase())))
 let scene, disposed = false, timer, bootTimer, keyHandler, previousFocus
 const wrap = (i,n) => ((i % n) + n) % n
-function select(index) {
+function select(index,navigation) {
   selected.value = index
   hovered.value = null
   mode.value = 'archive'
   exploded.value = false
   scene?.setDetail(false)
-  scene?.select(index)
+  scene?.select(index,navigation)
 }
 function navigate(axis,direction) {
   if(mode.value === 'detail') return
+  if(scene) {scene.navigate(axis,direction);return}
   const column = axis === 'lane' ? wrap(lane.value + direction,groups.length) : lane.value
   const position = axis === 'row' ? wrap(row.value + direction,groups[column].length) : Math.min(row.value,groups[column].length-1)
   select(groups[column][position])
