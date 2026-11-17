@@ -1,21 +1,9 @@
 {
-  "categories": [
-    "导览与索引",
-    "阅读笔记",
-    "实验与验证",
-    "实现计划",
-    "项目档案"
-  ],
-  "columns": [
-    "导览与索引",
-    "阅读笔记",
-    "实验与验证",
-    "实现计划",
-    "项目档案"
-  ],
-  "records": [
+  "articles": [
     {
       "id": "K-001",
+      "kind": "article",
+      "file": "index.md",
       "title": "Raytrace 图形学知识库",
       "en": "INDEX",
       "department": "导览与索引",
@@ -27,25 +15,31 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/",
-      "words": 235
+      "words": 235,
+      "topicSlug": null
     },
     {
       "id": "K-002",
-      "title": "主题索引",
+      "kind": "article",
+      "file": "topics.md",
+      "title": "知识库总纲",
       "en": "TOPICS",
       "department": "导览与索引",
       "category": "导览与索引",
       "date": "",
       "lead": "Jack",
       "clearance": "公开 · 可阅读",
-      "abstract": "每篇实验笔记从一个可检验的问题出发，记录原理、代码入口、复现命令、结果和适用范围。",
+      "abstract": "先看知识地图，再进入专题。每个专题内部按原理、实现、实验的顺序阅读；项目记录单独归档。",
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/topics.html",
-      "words": 593
+      "words": 1356,
+      "topicSlug": null
     },
     {
       "id": "K-003",
+      "kind": "article",
+      "file": "workflow.md",
       "title": "研究与实现工作流",
       "en": "WORKFLOW",
       "department": "导览与索引",
@@ -57,10 +51,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/workflow.html",
-      "words": 751
+      "words": 751,
+      "topicSlug": "research-workflow"
     },
     {
       "id": "K-004",
+      "kind": "article",
+      "file": "reading/assets-gltf.md",
       "title": "模型与材质资源：从公开资产接入渲染器",
       "en": "READING / ASSETS-GLTF",
       "department": "阅读笔记",
@@ -72,10 +69,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/reading/assets-gltf.html",
-      "words": 757
+      "words": 757,
+      "topicSlug": "assets-materials"
     },
     {
       "id": "K-005",
+      "kind": "article",
+      "file": "reading/many-light-sampling.md",
       "title": "多光源采样与 ReSTIR DI 阅读笔记",
       "en": "READING / MANY-LIGHT-SAMPLING",
       "department": "阅读笔记",
@@ -87,10 +87,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/reading/many-light-sampling.html",
-      "words": 1529
+      "words": 1529,
+      "topicSlug": "many-lights"
     },
     {
       "id": "K-006",
+      "kind": "article",
+      "file": "reading/restir-reuse.md",
       "title": "ReSTIR 入门第三篇：从独立候选到时空复用",
       "en": "READING / RESTIR-REUSE",
       "department": "阅读笔记",
@@ -102,10 +105,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/reading/restir-reuse.html",
-      "words": 1065
+      "words": 1065,
+      "topicSlug": "spatial-reuse"
     },
     {
       "id": "K-007",
+      "kind": "article",
+      "file": "reading/restir-ris.md",
       "title": "ReSTIR 入门第二篇：RIS 与蓄水池采样",
       "en": "READING / RESTIR-RIS",
       "department": "阅读笔记",
@@ -117,10 +123,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/reading/restir-ris.html",
-      "words": 1155
+      "words": 1155,
+      "topicSlug": "ris"
     },
     {
       "id": "K-008",
+      "kind": "article",
+      "file": "reading/restir-stochastic-pairwise.md",
       "title": "ReSTIR 第五篇：把大邻域复用的成本降下来",
       "en": "READING / RESTIR-STOCHASTIC-PAIRWISE",
       "department": "阅读笔记",
@@ -132,10 +141,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/reading/restir-stochastic-pairwise.html",
-      "words": 1386
+      "words": 1386,
+      "topicSlug": "pairwise-mis"
     },
     {
       "id": "K-009",
+      "kind": "article",
+      "file": "reading/restir-temporal.md",
       "title": "ReSTIR 入门第四篇：静态历史复用与置信度",
       "en": "READING / RESTIR-TEMPORAL",
       "department": "阅读笔记",
@@ -147,10 +159,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/reading/restir-temporal.html",
-      "words": 758
+      "words": 758,
+      "topicSlug": "temporal-reuse"
     },
     {
       "id": "K-010",
+      "kind": "article",
+      "file": "experiments/asset-gallery.md",
       "title": "更大的场景、外部模型与 PBR 材质",
       "en": "EXPERIMENTS / ASSET-GALLERY",
       "department": "实验与验证",
@@ -162,10 +177,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/experiments/asset-gallery.html",
-      "words": 2539
+      "words": 2539,
+      "topicSlug": "assets-materials"
     },
     {
       "id": "K-011",
+      "kind": "article",
+      "file": "experiments/cornell-mis.md",
       "title": "Cornell Box 光源采样与 MIS",
       "en": "EXPERIMENTS / CORNELL-MIS",
       "department": "实验与验证",
@@ -177,10 +195,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/experiments/cornell-mis.html",
-      "words": 1531
+      "words": 1531,
+      "topicSlug": "light-transport"
     },
     {
       "id": "K-012",
+      "kind": "article",
+      "file": "experiments/many-light-sampling.md",
       "title": "Cornell Box 多光源采样实验",
       "en": "EXPERIMENTS / MANY-LIGHT-SAMPLING",
       "department": "实验与验证",
@@ -192,10 +213,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/experiments/many-light-sampling.html",
-      "words": 1405
+      "words": 1405,
+      "topicSlug": "many-lights"
     },
     {
       "id": "K-013",
+      "kind": "article",
+      "file": "experiments/pairwise-mis.md",
       "title": "Pairwise MIS：减少空间复用的交叉评价",
       "en": "EXPERIMENTS / PAIRWISE-MIS",
       "department": "实验与验证",
@@ -207,10 +231,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/experiments/pairwise-mis.html",
-      "words": 2897
+      "words": 2897,
+      "topicSlug": "pairwise-mis"
     },
     {
       "id": "K-014",
+      "kind": "article",
+      "file": "experiments/ris-baseline.md",
       "title": "最小 RIS 基线：候选变多之后，噪声与成本怎么变",
       "en": "EXPERIMENTS / RIS-BASELINE",
       "department": "实验与验证",
@@ -222,10 +249,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/experiments/ris-baseline.html",
-      "words": 1715
+      "words": 1715,
+      "topicSlug": "ris"
     },
     {
       "id": "K-015",
+      "kind": "article",
+      "file": "experiments/spatial-reuse.md",
       "title": "静态空间复用：邻居样本带来了多少收益",
       "en": "EXPERIMENTS / SPATIAL-REUSE",
       "department": "实验与验证",
@@ -237,10 +267,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/experiments/spatial-reuse.html",
-      "words": 1738
+      "words": 1738,
+      "topicSlug": "spatial-reuse"
     },
     {
       "id": "K-016",
+      "kind": "article",
+      "file": "plans/asset-gallery.md",
       "title": "大场景、模型与材质实现计划",
       "en": "PLANS / ASSET-GALLERY",
       "department": "实现计划",
@@ -252,10 +285,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/plans/asset-gallery.html",
-      "words": 989
+      "words": 989,
+      "topicSlug": "assets-materials"
     },
     {
       "id": "K-017",
+      "kind": "article",
+      "file": "plans/many-light-sampling.md",
       "title": "多光源采样实现计划",
       "en": "PLANS / MANY-LIGHT-SAMPLING",
       "department": "实现计划",
@@ -267,10 +303,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/plans/many-light-sampling.html",
-      "words": 1044
+      "words": 1044,
+      "topicSlug": "many-lights"
     },
     {
       "id": "K-018",
+      "kind": "article",
+      "file": "plans/pairwise-mis.md",
       "title": "Pairwise MIS 实现计划",
       "en": "PLANS / PAIRWISE-MIS",
       "department": "实现计划",
@@ -282,10 +321,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/plans/pairwise-mis.html",
-      "words": 825
+      "words": 825,
+      "topicSlug": "pairwise-mis"
     },
     {
       "id": "K-019",
+      "kind": "article",
+      "file": "plans/ris-baseline.md",
       "title": "最小 RIS 基线实现计划",
       "en": "PLANS / RIS-BASELINE",
       "department": "实现计划",
@@ -297,10 +339,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/plans/ris-baseline.html",
-      "words": 982
+      "words": 982,
+      "topicSlug": "ris"
     },
     {
       "id": "K-020",
+      "kind": "article",
+      "file": "plans/spatial-reuse.md",
       "title": "静态空间复用实现计划",
       "en": "PLANS / SPATIAL-REUSE",
       "department": "实现计划",
@@ -312,10 +357,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/plans/spatial-reuse.html",
-      "words": 718
+      "words": 718,
+      "topicSlug": "spatial-reuse"
     },
     {
       "id": "K-021",
+      "kind": "article",
+      "file": "architecture.md",
       "title": "Architecture, milestone 0.2",
       "en": "ARCHITECTURE",
       "department": "项目档案",
@@ -327,10 +375,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/architecture.html",
-      "words": 6586
+      "words": 6586,
+      "topicSlug": "renderer-architecture"
     },
     {
       "id": "K-022",
+      "kind": "article",
+      "file": "dependencies.md",
       "title": "Third-party dependencies",
       "en": "DEPENDENCIES",
       "department": "项目档案",
@@ -342,10 +393,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/dependencies.html",
-      "words": 1249
+      "words": 1249,
+      "topicSlug": "renderer-architecture"
     },
     {
       "id": "K-023",
+      "kind": "article",
+      "file": "progress.md",
       "title": "进度与续接记录",
       "en": "PROGRESS",
       "department": "项目档案",
@@ -357,10 +411,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/progress.html",
-      "words": 5791
+      "words": 5791,
+      "topicSlug": "project-progress"
     },
     {
       "id": "K-024",
+      "kind": "article",
+      "file": "validation-cornell.md",
       "title": "Cornell Box milestone 0.2",
       "en": "VALIDATION-CORNELL",
       "department": "项目档案",
@@ -372,10 +429,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/validation-cornell.html",
-      "words": 4311
+      "words": 4311,
+      "topicSlug": "light-transport"
     },
     {
       "id": "K-025",
+      "kind": "article",
+      "file": "validation-materials.md",
       "title": "立方体材质与降噪验证",
       "en": "VALIDATION-MATERIALS",
       "department": "项目档案",
@@ -387,10 +447,13 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/validation-materials.html",
-      "words": 850
+      "words": 850,
+      "topicSlug": "renderer-architecture"
     },
     {
       "id": "K-026",
+      "kind": "article",
+      "file": "validation.md",
       "title": "Milestone 0.1 validation",
       "en": "VALIDATION",
       "department": "项目档案",
@@ -402,7 +465,960 @@
       "findings": [],
       "source": "Raytrace 图形学知识库",
       "href": "/kb/validation.html",
-      "words": 3140
+      "words": 3140,
+      "topicSlug": "renderer-architecture"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "sampling",
+      "title": "光传输与采样",
+      "description": "从光照积分和 MIS，逐步走向样本复用。"
+    },
+    {
+      "id": "renderer",
+      "title": "渲染器实践",
+      "description": "理解渲染器，再接入场景、模型与材质。"
+    },
+    {
+      "id": "research",
+      "title": "研究与项目",
+      "description": "整理研究方法，跟踪实现与后续方向。"
+    }
+  ],
+  "root": {
+    "columns": [
+      "光传输与采样",
+      "渲染器实践",
+      "研究与项目"
+    ],
+    "records": [
+      {
+        "id": "T-01",
+        "kind": "topic",
+        "slug": "light-transport",
+        "title": "光传输与 MIS",
+        "en": "TOPIC / LIGHT-TRANSPORT",
+        "category": "光传输与采样",
+        "department": "光传输与采样",
+        "abstract": "从 Cornell Box 理解光源采样与 BSDF 采样如何组合，再核对几何和能量。",
+        "href": "/explore/light-transport.html",
+        "words": 0,
+        "articleCount": 2,
+        "stages": [
+          "原理与实验",
+          "正确性验证"
+        ]
+      },
+      {
+        "id": "T-02",
+        "kind": "topic",
+        "slug": "many-lights",
+        "title": "多光源采样",
+        "en": "TOPIC / MANY-LIGHTS",
+        "category": "光传输与采样",
+        "department": "光传输与采样",
+        "abstract": "接在 MIS 基础之后，理解选灯概率、按功率采样及其局限。",
+        "href": "/explore/many-lights.html",
+        "words": 0,
+        "articleCount": 3,
+        "stages": [
+          "阅读与原理",
+          "实现计划",
+          "实验与验证"
+        ]
+      },
+      {
+        "id": "T-03",
+        "kind": "topic",
+        "slug": "ris",
+        "title": "RIS 与蓄水池",
+        "en": "TOPIC / RIS",
+        "category": "光传输与采样",
+        "department": "光传输与采样",
+        "abstract": "从多光源基线进入候选重采样，先建立可以验证的独立 RIS 基线。",
+        "href": "/explore/ris.html",
+        "words": 0,
+        "articleCount": 3,
+        "stages": [
+          "阅读与原理",
+          "实现计划",
+          "实验与验证"
+        ]
+      },
+      {
+        "id": "T-04",
+        "kind": "topic",
+        "slug": "spatial-reuse",
+        "title": "空间样本复用",
+        "en": "TOPIC / SPATIAL-REUSE",
+        "category": "光传输与采样",
+        "department": "光传输与采样",
+        "abstract": "在 RIS 基础上复用邻居样本，检查接收像素权重、支持域与实际成本。",
+        "href": "/explore/spatial-reuse.html",
+        "words": 0,
+        "articleCount": 3,
+        "stages": [
+          "阅读与原理",
+          "实现计划",
+          "实验与验证"
+        ]
+      },
+      {
+        "id": "T-05",
+        "kind": "topic",
+        "slug": "temporal-reuse",
+        "title": "历史样本复用",
+        "en": "TOPIC / TEMPORAL-REUSE",
+        "category": "光传输与采样",
+        "department": "光传输与采样",
+        "abstract": "接续空间复用，理解历史样本、相关性和置信度。目前完成阅读，独立实现与实验仍待规划。",
+        "href": "/explore/temporal-reuse.html",
+        "words": 0,
+        "articleCount": 1,
+        "stages": [
+          "阅读与原理"
+        ]
+      },
+      {
+        "id": "T-06",
+        "kind": "topic",
+        "slug": "pairwise-mis",
+        "title": "Pairwise MIS 与复用成本",
+        "en": "TOPIC / PAIRWISE-MIS",
+        "category": "光传输与采样",
+        "department": "光传输与采样",
+        "abstract": "对照空间复用的交叉评价成本，阅读、实现并验证普通 Pairwise MIS；随机大邻域部分仍待实现。",
+        "href": "/explore/pairwise-mis.html",
+        "words": 0,
+        "articleCount": 3,
+        "stages": [
+          "阅读与原理",
+          "实现计划",
+          "实验与验证"
+        ]
+      },
+      {
+        "id": "T-07",
+        "kind": "topic",
+        "slug": "renderer-architecture",
+        "title": "渲染器架构与平台",
+        "en": "TOPIC / RENDERER-ARCHITECTURE",
+        "category": "渲染器实践",
+        "department": "渲染器实践",
+        "abstract": "先建立模块、场景数据与 Vulkan Ray Query 的整体认识，再查看依赖和平台验证。",
+        "href": "/explore/renderer-architecture.html",
+        "words": 0,
+        "articleCount": 4,
+        "stages": [
+          "整体架构",
+          "构建与依赖",
+          "平台验证",
+          "材质与显示验证"
+        ]
+      },
+      {
+        "id": "T-08",
+        "kind": "topic",
+        "slug": "assets-materials",
+        "title": "模型与 PBR 材质",
+        "en": "TOPIC / ASSETS-MATERIALS",
+        "category": "渲染器实践",
+        "department": "渲染器实践",
+        "abstract": "从公开资产和 glTF 规范出发，规划模型、贴图与较大场景接入，再查看 Gallery 实测。",
+        "href": "/explore/assets-materials.html",
+        "words": 0,
+        "articleCount": 3,
+        "stages": [
+          "资源与规范",
+          "实现计划",
+          "实验与验证"
+        ]
+      },
+      {
+        "id": "T-09",
+        "kind": "topic",
+        "slug": "research-workflow",
+        "title": "研究与实现工作流",
+        "en": "TOPIC / RESEARCH-WORKFLOW",
+        "category": "研究与项目",
+        "department": "研究与项目",
+        "abstract": "先读原文，形成可复查的实现计划，再实现、验证并回填经验。",
+        "href": "/explore/research-workflow.html",
+        "words": 0,
+        "articleCount": 1,
+        "stages": [
+          "研究方法"
+        ]
+      },
+      {
+        "id": "T-10",
+        "kind": "topic",
+        "slug": "project-progress",
+        "title": "项目进度与续接",
+        "en": "TOPIC / PROJECT-PROGRESS",
+        "category": "研究与项目",
+        "department": "研究与项目",
+        "abstract": "查阅已经完成的功能、验证范围和待继续的工作；这是项目记录，不是采样学习路线的一环。",
+        "href": "/explore/project-progress.html",
+        "words": 0,
+        "articleCount": 1,
+        "stages": [
+          "项目记录"
+        ]
+      }
+    ]
+  },
+  "topics": [
+    {
+      "slug": "light-transport",
+      "chapter": "sampling",
+      "title": "光传输与 MIS",
+      "description": "从 Cornell Box 理解光源采样与 BSDF 采样如何组合，再核对几何和能量。",
+      "steps": [
+        [
+          "experiments/cornell-mis.md",
+          "原理与实验"
+        ],
+        [
+          "validation-cornell.md",
+          "正确性验证"
+        ]
+      ],
+      "number": 1,
+      "chapterTitle": "光传输与采样",
+      "columns": [
+        "光传输与 MIS"
+      ],
+      "records": [
+        {
+          "id": "K-011",
+          "kind": "article",
+          "file": "experiments/cornell-mis.md",
+          "title": "Cornell Box 光源采样与 MIS",
+          "en": "EXPERIMENTS / CORNELL-MIS",
+          "department": "实验与验证",
+          "category": "光传输与 MIS",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "在相同的每像素样本数下，把直接光源采样和 BSDF 采样合起来，能把亮度误差降多少？这里用同一台 GPU、同一个 Cornell Box 和相同的反弹上限比较两种积分器。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/experiments/cornell-mis.html",
+          "words": 1531,
+          "topicSlug": "light-transport",
+          "stage": "原理与实验",
+          "step": 1,
+          "totalSteps": 2
+        },
+        {
+          "id": "K-024",
+          "kind": "article",
+          "file": "validation-cornell.md",
+          "title": "Cornell Box milestone 0.2",
+          "en": "VALIDATION-CORNELL",
+          "department": "项目档案",
+          "category": "光传输与 MIS",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "This is a diffuse reference renderer. Textures, glTF, metals, glass, environment lighting, denoising and Metal/iOS are not implemented.",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/validation-cornell.html",
+          "words": 4311,
+          "topicSlug": "light-transport",
+          "stage": "正确性验证",
+          "step": 2,
+          "totalSteps": 2
+        }
+      ]
+    },
+    {
+      "slug": "many-lights",
+      "chapter": "sampling",
+      "title": "多光源采样",
+      "description": "接在 MIS 基础之后，理解选灯概率、按功率采样及其局限。",
+      "steps": [
+        [
+          "reading/many-light-sampling.md",
+          "阅读与原理"
+        ],
+        [
+          "plans/many-light-sampling.md",
+          "实现计划"
+        ],
+        [
+          "experiments/many-light-sampling.md",
+          "实验与验证"
+        ]
+      ],
+      "number": 2,
+      "chapterTitle": "光传输与采样",
+      "columns": [
+        "多光源采样"
+      ],
+      "records": [
+        {
+          "id": "K-005",
+          "kind": "article",
+          "file": "reading/many-light-sampling.md",
+          "title": "多光源采样与 ReSTIR DI 阅读笔记",
+          "en": "READING / MANY-LIGHT-SAMPLING",
+          "department": "阅读笔记",
+          "category": "多光源采样",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "基线实验之后继续读ReSTIR 入门第二篇：RIS 与蓄水池采样，从候选重采样和贡献权重接起。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/reading/many-light-sampling.html",
+          "words": 1529,
+          "topicSlug": "many-lights",
+          "stage": "阅读与原理",
+          "step": 1,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-017",
+          "kind": "article",
+          "file": "plans/many-light-sampling.md",
+          "title": "多光源采样实现计划",
+          "en": "PLANS / MANY-LIGHT-SAMPLING",
+          "department": "实现计划",
+          "category": "多光源采样",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "先为 Vulkan 路径追踪器建立可对照的多光源基线。同一个 Cornell 场景分别使用均匀选灯和按发射功率选灯。阅读依据见多光源采样与 ReSTIR DI 阅读笔记。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/plans/many-light-sampling.html",
+          "words": 1044,
+          "topicSlug": "many-lights",
+          "stage": "实现计划",
+          "step": 2,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-012",
+          "kind": "article",
+          "file": "experiments/many-light-sampling.md",
+          "title": "Cornell Box 多光源采样实验",
+          "en": "EXPERIMENTS / MANY-LIGHT-SAMPLING",
+          "department": "实验与验证",
+          "category": "多光源采样",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "在几乎相同的阴影射线数下，按发射功率选灯让两组场景的整体 RMSE 分别下降约 41% 和 28%，却让挡板阴影区域的 RMSE 上升约 37%。全局指标和局部阴影给出了不同答案。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/experiments/many-light-sampling.html",
+          "words": 1405,
+          "topicSlug": "many-lights",
+          "stage": "实验与验证",
+          "step": 3,
+          "totalSteps": 3
+        }
+      ]
+    },
+    {
+      "slug": "ris",
+      "chapter": "sampling",
+      "title": "RIS 与蓄水池",
+      "description": "从多光源基线进入候选重采样，先建立可以验证的独立 RIS 基线。",
+      "steps": [
+        [
+          "reading/restir-ris.md",
+          "阅读与原理"
+        ],
+        [
+          "plans/ris-baseline.md",
+          "实现计划"
+        ],
+        [
+          "experiments/ris-baseline.md",
+          "实验与验证"
+        ]
+      ],
+      "number": 3,
+      "chapterTitle": "光传输与采样",
+      "columns": [
+        "RIS 与蓄水池"
+      ],
+      "records": [
+        {
+          "id": "K-007",
+          "kind": "article",
+          "file": "reading/restir-ris.md",
+          "title": "ReSTIR 入门第二篇：RIS 与蓄水池采样",
+          "en": "READING / RESTIR-RIS",
+          "department": "阅读笔记",
+          "category": "RIS 与蓄水池",
+          "date": "2026-11-12",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "主读材料为 SIGGRAPH 2023 课程 A Gentle Introduction to ReSTIR: Path Reuse in Real-Time，使用作者于 2024-03-04 更新的课程笔记。这次聚焦 §2.4、§3.1、§4.1 和第 9 章，其他部分留作后续阅读。作者建议从这份综合笔记入门。课程主页与视频入口 · 课程笔记 PDF · Markus Kettunen 的 RIS 幻灯片",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/reading/restir-ris.html",
+          "words": 1155,
+          "topicSlug": "ris",
+          "stage": "阅读与原理",
+          "step": 1,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-019",
+          "kind": "article",
+          "file": "plans/ris-baseline.md",
+          "title": "最小 RIS 基线实现计划",
+          "en": "PLANS / RIS-BASELINE",
+          "department": "实现计划",
+          "category": "RIS 与蓄水池",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "依据第二篇阅读笔记，先在每个着色点实现独立候选的 RIS，沿用现有多光源房间与挡板。第一轮用完整可见贡献打分，保留现有 MIS 的两项分解，验证重采样后的平均能量与代价。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/plans/ris-baseline.html",
+          "words": 982,
+          "topicSlug": "ris",
+          "stage": "实现计划",
+          "step": 2,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-014",
+          "kind": "article",
+          "file": "experiments/ris-baseline.md",
+          "title": "最小 RIS 基线：候选变多之后，噪声与成本怎么变",
+          "en": "EXPERIMENTS / RIS-BASELINE",
+          "department": "实验与验证",
+          "category": "RIS 与蓄水池",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "完整可见贡献打分的 RIS 已接入现有路径追踪器。在挡板场景、按功率生成候选时，4 候选 RIS 在相同 128 spp 下把整体亮度 RMSE 降低约 14%，挡板阴影 RMSE 降低约 41%。实际阴影射线数约为原来的 4 倍，采样 GPU 时间约为 1.76 倍。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/experiments/ris-baseline.html",
+          "words": 1715,
+          "topicSlug": "ris",
+          "stage": "实验与验证",
+          "step": 3,
+          "totalSteps": 3
+        }
+      ]
+    },
+    {
+      "slug": "spatial-reuse",
+      "chapter": "sampling",
+      "title": "空间样本复用",
+      "description": "在 RIS 基础上复用邻居样本，检查接收像素权重、支持域与实际成本。",
+      "steps": [
+        [
+          "reading/restir-reuse.md",
+          "阅读与原理"
+        ],
+        [
+          "plans/spatial-reuse.md",
+          "实现计划"
+        ],
+        [
+          "experiments/spatial-reuse.md",
+          "实验与验证"
+        ]
+      ],
+      "number": 4,
+      "chapterTitle": "光传输与采样",
+      "columns": [
+        "空间样本复用"
+      ],
+      "records": [
+        {
+          "id": "K-006",
+          "kind": "article",
+          "file": "reading/restir-reuse.md",
+          "title": "ReSTIR 入门第三篇：从独立候选到时空复用",
+          "en": "READING / RESTIR-REUSE",
+          "department": "阅读笔记",
+          "category": "空间样本复用",
+          "date": "2026-11-12",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "这篇继续读《A Gentle Introduction to ReSTIR》的 §4.2–4.4，回看 §3.4 的支持域条件。使用 2024-03-04 更新版课程笔记，正文页码 14、16–20。课程主页 · 原文 PDF，从 §4.2 开始",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/reading/restir-reuse.html",
+          "words": 1065,
+          "topicSlug": "spatial-reuse",
+          "stage": "阅读与原理",
+          "step": 1,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-020",
+          "kind": "article",
+          "file": "plans/spatial-reuse.md",
+          "title": "静态空间复用实现计划",
+          "en": "PLANS / SPATIAL-REUSE",
+          "department": "实现计划",
+          "category": "空间样本复用",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "依据第三篇阅读笔记，实现静态、一次散射的空间复用基线。沿用完整可见贡献、原 NEE／BSDF 的 MIS 分解和独立 RIS 参考。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/plans/spatial-reuse.html",
+          "words": 718,
+          "topicSlug": "spatial-reuse",
+          "stage": "实现计划",
+          "step": 2,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-015",
+          "kind": "article",
+          "file": "experiments/spatial-reuse.md",
+          "title": "静态空间复用：邻居样本带来了多少收益",
+          "en": "EXPERIMENTS / SPATIAL-REUSE",
+          "department": "实验与验证",
+          "category": "空间样本复用",
+          "date": "2026-11-13",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "两阶段空间复用已经完成。在同为 128 spp、每像素四个初始候选时，挡板场景的整体亮度 RMSE 比独立 RIS 降低约 4.5%，阴影区域降低约 24%。完整交叉权重检查让 NEE 阴影射线数增至约 3.88 倍，GPU 采样时间增至约 3.06 倍。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/experiments/spatial-reuse.html",
+          "words": 1738,
+          "topicSlug": "spatial-reuse",
+          "stage": "实验与验证",
+          "step": 3,
+          "totalSteps": 3
+        }
+      ]
+    },
+    {
+      "slug": "temporal-reuse",
+      "chapter": "sampling",
+      "title": "历史样本复用",
+      "description": "接续空间复用，理解历史样本、相关性和置信度。目前完成阅读，独立实现与实验仍待规划。",
+      "steps": [
+        [
+          "reading/restir-temporal.md",
+          "阅读与原理"
+        ]
+      ],
+      "number": 5,
+      "chapterTitle": "光传输与采样",
+      "columns": [
+        "历史样本复用"
+      ],
+      "records": [
+        {
+          "id": "K-009",
+          "kind": "article",
+          "file": "reading/restir-temporal.md",
+          "title": "ReSTIR 入门第四篇：静态历史复用与置信度",
+          "en": "READING / RESTIR-TEMPORAL",
+          "department": "阅读笔记",
+          "category": "历史样本复用",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "继续读课程笔记 §4.4 和 Algorithm 3。空间基线每帧都产生新蓄水池，当前亮度累积得到的结果会逐渐收敛。时间复用还希望把上一帧选中的光源样本带进新一帧的重采样，减少发现好候选的重复成本。课程原文，正文第 19–20 页",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/reading/restir-temporal.html",
+          "words": 758,
+          "topicSlug": "temporal-reuse",
+          "stage": "阅读与原理",
+          "step": 1,
+          "totalSteps": 1
+        }
+      ]
+    },
+    {
+      "slug": "pairwise-mis",
+      "chapter": "sampling",
+      "title": "Pairwise MIS 与复用成本",
+      "description": "对照空间复用的交叉评价成本，阅读、实现并验证普通 Pairwise MIS；随机大邻域部分仍待实现。",
+      "steps": [
+        [
+          "reading/restir-stochastic-pairwise.md",
+          "阅读与原理"
+        ],
+        [
+          "plans/pairwise-mis.md",
+          "实现计划"
+        ],
+        [
+          "experiments/pairwise-mis.md",
+          "实验与验证"
+        ]
+      ],
+      "number": 6,
+      "chapterTitle": "光传输与采样",
+      "columns": [
+        "Pairwise MIS 与复用成本"
+      ],
+      "records": [
+        {
+          "id": "K-008",
+          "kind": "article",
+          "file": "reading/restir-stochastic-pairwise.md",
+          "title": "ReSTIR 第五篇：把大邻域复用的成本降下来",
+          "en": "READING / RESTIR-STOCHASTIC-PAIRWISE",
+          "department": "阅读笔记",
+          "category": "Pairwise MIS 与复用成本",
+          "date": "2026-11-13",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "项目回填 · 已按实现计划完成普通 defensive Pairwise MIS，成本、误差和收敛见实验页。随机大邻域部分仍处于阅读阶段。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/reading/restir-stochastic-pairwise.html",
+          "words": 1386,
+          "topicSlug": "pairwise-mis",
+          "stage": "阅读与原理",
+          "step": 1,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-018",
+          "kind": "article",
+          "file": "plans/pairwise-mis.md",
+          "title": "Pairwise MIS 实现计划",
+          "en": "PLANS / PAIRWISE-MIS",
+          "department": "实现计划",
+          "category": "Pairwise MIS 与复用成本",
+          "date": "2026-11-13",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "先在已有静态空间基线上实现普通的 defensive Pairwise MIS，再考虑时间复用和随机大邻域选择。它直接针对上一轮实验中完整交叉目标函数评价的成本。阅读依据为第五篇笔记和课程式 7.8。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/plans/pairwise-mis.html",
+          "words": 825,
+          "topicSlug": "pairwise-mis",
+          "stage": "实现计划",
+          "step": 2,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-013",
+          "kind": "article",
+          "file": "experiments/pairwise-mis.md",
+          "title": "Pairwise MIS：减少空间复用的交叉评价",
+          "en": "EXPERIMENTS / PAIRWISE-MIS",
+          "department": "实验与验证",
+          "category": "Pairwise MIS 与复用成本",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "普通 defensive Pairwise MIS 已完成。在四邻居、完整可见性和相同 128 spp 下，挡板场景的 NEE 阴影射线数相对 balance 减少 42.4%，完整采样 GPU 时间减少 28.5%，整体亮度 RMSE 增加 0.49%，阴影 RMSE 增加 2.90%。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/experiments/pairwise-mis.html",
+          "words": 2897,
+          "topicSlug": "pairwise-mis",
+          "stage": "实验与验证",
+          "step": 3,
+          "totalSteps": 3
+        }
+      ]
+    },
+    {
+      "slug": "renderer-architecture",
+      "chapter": "renderer",
+      "title": "渲染器架构与平台",
+      "description": "先建立模块、场景数据与 Vulkan Ray Query 的整体认识，再查看依赖和平台验证。",
+      "steps": [
+        [
+          "architecture.md",
+          "整体架构"
+        ],
+        [
+          "dependencies.md",
+          "构建与依赖"
+        ],
+        [
+          "validation.md",
+          "平台验证"
+        ],
+        [
+          "validation-materials.md",
+          "材质与显示验证"
+        ]
+      ],
+      "number": 7,
+      "chapterTitle": "渲染器实践",
+      "columns": [
+        "渲染器架构与平台"
+      ],
+      "records": [
+        {
+          "id": "K-021",
+          "kind": "article",
+          "file": "architecture.md",
+          "title": "Architecture, milestone 0.2",
+          "en": "ARCHITECTURE",
+          "department": "项目档案",
+          "category": "渲染器架构与平台",
+          "date": "2026-11-13",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "src/core contains API-neutral scenes, meshes, instances, materials, camera math, explicit GPU data layouts, image export, render configuration and capability gating. src/vulkan owns Vulkan handles, memory, synchronization, acceler",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/architecture.html",
+          "words": 6586,
+          "topicSlug": "renderer-architecture",
+          "stage": "整体架构",
+          "step": 1,
+          "totalSteps": 4
+        },
+        {
+          "id": "K-022",
+          "kind": "article",
+          "file": "dependencies.md",
+          "title": "Third-party dependencies",
+          "en": "DEPENDENCIES",
+          "department": "项目档案",
+          "category": "渲染器架构与平台",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "Source revisions are pinned in tools/dependencies.json. Each checkout retains its upstream license and copyright notices. Copies of the license texts are in docs/licenses/ for local binary distribution alongside the project docume",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/dependencies.html",
+          "words": 1249,
+          "topicSlug": "renderer-architecture",
+          "stage": "构建与依赖",
+          "step": 2,
+          "totalSteps": 4
+        },
+        {
+          "id": "K-026",
+          "kind": "article",
+          "file": "validation.md",
+          "title": "Milestone 0.1 validation",
+          "en": "VALIDATION",
+          "department": "项目档案",
+          "category": "渲染器架构与平台",
+          "date": "2026-11-08",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "Validated on this Windows development machine with MSVC 19.38 / Visual Studio 2022, Release x64. The Vulkan loader reports version 1.4.357; the application requests Vulkan 1.2.",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/validation.html",
+          "words": 3140,
+          "topicSlug": "renderer-architecture",
+          "stage": "平台验证",
+          "step": 3,
+          "totalSteps": 4
+        },
+        {
+          "id": "K-025",
+          "kind": "article",
+          "file": "validation-materials.md",
+          "title": "立方体材质与降噪验证",
+          "en": "VALIDATION-MATERIALS",
+          "department": "项目档案",
+          "category": "渲染器架构与平台",
+          "date": "",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "材质缓冲保留原来的 32 字节步长。金属使用 RGB F0 的 Schlick 菲涅耳近似、Smith 遮蔽项和 GGX 可见法线采样。光源采样与路径延伸使用相同的反射方向 PDF 计算 MIS 权重。采样实现参考球冠方法。Dupuy 与 Benyoub 的 GGX VNDF 论文",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/validation-materials.html",
+          "words": 850,
+          "topicSlug": "renderer-architecture",
+          "stage": "材质与显示验证",
+          "step": 4,
+          "totalSteps": 4
+        }
+      ]
+    },
+    {
+      "slug": "assets-materials",
+      "chapter": "renderer",
+      "title": "模型与 PBR 材质",
+      "description": "从公开资产和 glTF 规范出发，规划模型、贴图与较大场景接入，再查看 Gallery 实测。",
+      "steps": [
+        [
+          "reading/assets-gltf.md",
+          "资源与规范"
+        ],
+        [
+          "plans/asset-gallery.md",
+          "实现计划"
+        ],
+        [
+          "experiments/asset-gallery.md",
+          "实验与验证"
+        ]
+      ],
+      "number": 8,
+      "chapterTitle": "渲染器实践",
+      "columns": [
+        "模型与 PBR 材质"
+      ],
+      "records": [
+        {
+          "id": "K-004",
+          "kind": "article",
+          "file": "reading/assets-gltf.md",
+          "title": "模型与材质资源：从公开资产接入渲染器",
+          "en": "READING / ASSETS-GLTF",
+          "department": "阅读笔记",
+          "category": "模型与 PBR 材质",
+          "date": "2026-11-13",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "2026-11-13，阅读与沉淀。用户将当前重点转向更大的场景、外部模型与材质。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/reading/assets-gltf.html",
+          "words": 757,
+          "topicSlug": "assets-materials",
+          "stage": "资源与规范",
+          "step": 1,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-016",
+          "kind": "article",
+          "file": "plans/asset-gallery.md",
+          "title": "大场景、模型与材质实现计划",
+          "en": "PLANS / ASSET-GALLERY",
+          "department": "实现计划",
+          "category": "模型与 PBR 材质",
+          "date": "2026-11-13",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "1. 扩展共享 Scene 与显式 GPU 结构；加载后仍复用每网格 BLAS 与节点 TLAS 实例。 2. 解析默认场景和节点层级，校验 accessor、索引、非有限值与退化变换。保存材质和贴图映射、资产文件路径和场景规模统计。 3. PBR 的 BRDF 评价与方向采样使用一致的混合 PDF；颜色贴图先转线性再插值。法线贴图处理 UV 方向、几何侧与插值法线。 4. 下载 Poly Haven CC0 木桌 1K glTF 及全部依赖，记录来源、许",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/plans/asset-gallery.html",
+          "words": 989,
+          "topicSlug": "assets-materials",
+          "stage": "实现计划",
+          "step": 2,
+          "totalSteps": 3
+        },
+        {
+          "id": "K-010",
+          "kind": "article",
+          "file": "experiments/asset-gallery.md",
+          "title": "更大的场景、外部模型与 PBR 材质",
+          "en": "EXPERIMENTS / ASSET-GALLERY",
+          "department": "实验与验证",
+          "category": "模型与 PBR 材质",
+          "date": "2026-11-13",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "2026-11-13，已完成桌面实现与验证。按资源与规范 → 实现计划 → 实现验证 → 本页回填推进。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/experiments/asset-gallery.html",
+          "words": 2539,
+          "topicSlug": "assets-materials",
+          "stage": "实验与验证",
+          "step": 3,
+          "totalSteps": 3
+        }
+      ]
+    },
+    {
+      "slug": "research-workflow",
+      "chapter": "research",
+      "title": "研究与实现工作流",
+      "description": "先读原文，形成可复查的实现计划，再实现、验证并回填经验。",
+      "steps": [
+        [
+          "workflow.md",
+          "研究方法"
+        ]
+      ],
+      "number": 9,
+      "chapterTitle": "研究与项目",
+      "columns": [
+        "研究与实现工作流"
+      ],
+      "records": [
+        {
+          "id": "K-003",
+          "kind": "article",
+          "file": "workflow.md",
+          "title": "研究与实现工作流",
+          "en": "WORKFLOW",
+          "department": "导览与索引",
+          "category": "研究与实现工作流",
+          "date": "2026-11-13",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "图形学专题按 阅读与沉淀 → 实现规划 → 实现与验证 → 经验回填 推进。每个阶段在知识库里留下可接续的记录。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/workflow.html",
+          "words": 751,
+          "topicSlug": "research-workflow",
+          "stage": "研究方法",
+          "step": 1,
+          "totalSteps": 1
+        }
+      ]
+    },
+    {
+      "slug": "project-progress",
+      "chapter": "research",
+      "title": "项目进度与续接",
+      "description": "查阅已经完成的功能、验证范围和待继续的工作；这是项目记录，不是采样学习路线的一环。",
+      "steps": [
+        [
+          "progress.md",
+          "项目记录"
+        ]
+      ],
+      "number": 10,
+      "chapterTitle": "研究与项目",
+      "columns": [
+        "项目进度与续接"
+      ],
+      "records": [
+        {
+          "id": "K-023",
+          "kind": "article",
+          "file": "progress.md",
+          "title": "进度与续接记录",
+          "en": "PROGRESS",
+          "department": "项目档案",
+          "category": "项目进度与续接",
+          "date": "2026-11-13",
+          "lead": "Jack",
+          "clearance": "公开 · 可阅读",
+          "abstract": "最后更新：2026-11-13（北京时间）。按用户新优先级完成扩大场景、glTF/GLB 模型与 PBR 贴图支持。",
+          "findings": [],
+          "source": "Raytrace 图形学知识库",
+          "href": "/kb/progress.html",
+          "words": 5791,
+          "topicSlug": "project-progress",
+          "stage": "项目记录",
+          "step": 1,
+          "totalSteps": 1
+        }
+      ]
     }
   ]
 }

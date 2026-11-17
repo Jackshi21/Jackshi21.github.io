@@ -32,8 +32,8 @@ npm run preview
 
 ## 三维档案主页
 
-主页以自行实现的程序化几何生成档案盘，通过 Three.js 渲染。每篇 Markdown 文章对应一个盘，分为五个分类。上下键／滚轮切换文章，左右键切换分类，Enter 查看摘要，Esc 返回。详情支持拖动旋转、分层拆解和阅读跳转。索引可搜索标题与摘要，全文搜索沿用 VitePress。
+主页以自行实现的程序化几何生成档案盘，通过 Three.js 渲染。首页按三个知识方向组织十个专题盘；展开专题后，盘片才对应该专题的文章，按阅读、实现计划、实验与验证等环节排列。上下键／滚轮按顺序切换，首页左右键切换方向，Enter 展开专题或查看文章摘要，Esc 返回。详情支持拖动旋转、分层拆解和阅读跳转。索引可搜索标题与摘要，全文搜索沿用 VitePress。
 
-构建前会自动生成盘片索引。模型、场景、相机运动和终端界面均在本站实现；未包含参考项目 RhineLabUI 的源码、GLB 模型或标志。Three.js 的 MIT 声明见 content/public/licenses/three-MIT.txt。
+知识层级和阅读顺序统一维护在 `content/.vitepress/knowledge-map.mjs`，侧栏、盘片索引、专题入口和文字总纲由这份结构生成。新增文章后需在对应专题登记，已有文章 URL 保持不变。构建前会自动生成盘片索引和 `content/explore/` 专题页，并刷新 `content/kb/topics.md`。模型、场景、相机运动和终端界面均在本站实现；未包含参考项目 RhineLabUI 的源码、GLB 模型或标志。Three.js 的 MIT 声明见 content/public/licenses/three-MIT.txt。
 
-交互回归检查：执行 `node --test scripts/tests/archive-motion.test.mjs`，覆盖原位归还、首尾连续切列、快速反向切换与涟漪传播。
+回归检查：执行 `node --test scripts/tests/*.test.mjs`，覆盖盘片归位、连续切列、悬停与点击、涟漪，以及专题归属、阅读顺序、路由和侧栏完整性。

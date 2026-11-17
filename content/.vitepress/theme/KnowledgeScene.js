@@ -322,6 +322,7 @@ export class KnowledgeScene {
     },{signal,passive:false})
   }
   navigate(axis,direction) {
+    if(axis==='lane'&&this.groups.length<2)return
     const next=this.motion.navigation(axis,direction)
     this.onSelect(next.index,next.navigation)
   }
