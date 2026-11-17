@@ -221,6 +221,7 @@ export class KnowledgeScene {
     this.cards.delete(key)
   }
   select(index, navigation, immediate=false) {
+    this.setHovered(null)
     const entry=this.motion.select(index,navigation,immediate)
     const card=this.ensureCard(entry)
     this.disc=card.group
@@ -237,6 +238,7 @@ export class KnowledgeScene {
     }
   }
   setDetail(value) {
+    if(value)this.setHovered(null)
     this.detailTarget=value?1:0
     if(!value)for(const card of this.cards.values())card.explodeTarget=0
   }
@@ -265,31 +267,53 @@ export class KnowledgeScene {
     while(object&&!object.userData.archiveCell)object=object.parent
     return object?{index:object.userData.archiveIndex,cell:{...object.userData.archiveCell}}:null
   }
+  setHovered(picked) {
+    const previous=this.motion.hovered
+    const entry=this.motion.hover(picked?.index??null,picked?{cell:picked.cell}:undefined)
+    if(entry!==previous)this.onHover(entry?.index??null)
+  }
   bindEvents() {
     const canvas=this.renderer.domElement, signal=this.events.signal
     let down=null, lastWheel=0
-    canvas.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId)}, {signal})
+    canvas.addEventListener('pointerdown',e=>{
+      if(e.button!==0)return
+      const picked=this.pick(e.clientX,e.clientY)
+      if(!this.detailTarget&&e.pointerType!=='touch')this.setHovered(picked)
+      down={x:e.clientX,y:e.clientY,picked}
+      canvas.setPointerCapture(e.pointerId)
+    }, {signal})
     canvas.addEventListener('pointermove',e=>{
       if(down&&this.detailTarget) {
         this.disc.rotation.y+=e.movementX*.007
         this.disc.rotation.x=THREE.MathUtils.clamp(this.disc.rotation.x+e.movementY*.004,-.45,.45)
-      } else if(!down) {
+      } else if(down) {
+        if(Math.hypot(e.clientX-down.x,e.clientY-down.y)>8)this.setHovered(null)
+      } else if(!this.detailTarget&&e.pointerType!=='touch') {
+        if(this.suppressHoverAt) {
+          if(Math.hypot(e.clientX-this.suppressHoverAt.x,e.clientY-this.suppressHoverAt.y)<5)return
+          this.suppressHoverAt=null
+        }
         const picked=this.pick(e.clientX,e.clientY)
         canvas.style.cursor=picked===null?'grab':'pointer'
-        this.onHover(picked?.index??null)
+        this.setHovered(picked)
       }
     },{signal})
     canvas.addEventListener('pointerup',e=>{
-      if(!down)return
+      if(e.button!==0||!down)return
+      const pressed=down
       const dx=e.clientX-down.x,dy=e.clientY-down.y
       down=null
       if(this.detailTarget)return
-      if(Math.hypot(dx,dy)<8) {const picked=this.pick(e.clientX,e.clientY);if(picked)this.onSelect(picked.index,{cell:picked.cell})}
+      if(Math.hypot(dx,dy)<8) {
+        this.suppressHoverAt={x:e.clientX,y:e.clientY}
+        if(pressed.picked)this.onSelect(pressed.picked.index,{cell:pressed.picked.cell})
+      }
       else if(Math.abs(dx)>Math.abs(dy))this.navigate('lane',dx>0?-1:1)
       else this.navigate('row',dy>0?-1:1)
     },{signal})
-    canvas.addEventListener('pointercancel',()=>{down=null},{signal})
-    canvas.addEventListener('pointerleave',()=>this.onHover(null),{signal})
+    canvas.addEventListener('pointercancel',()=>{down=null;this.setHovered(null)},{signal})
+    canvas.addEventListener('pointerleave',()=>{this.suppressHoverAt=null;this.setHovered(null)},{signal})
+    window.addEventListener('blur',()=>this.setHovered(null),{signal})
     canvas.addEventListener('wheel',e=>{
       e.preventDefault()
       if(this.detailTarget||performance.now()-lastWheel<180)return
@@ -352,8 +376,10 @@ export class KnowledgeScene {
       const field=(row)=>this.motion.field(cell.lane,row,this.reduced)*(1-this.detail)
       const wave=field(cell.row)
       const slope=(field(cell.row+.5)-field(cell.row-.5))/ROW_PITCH
-      const hidden=this.motion.entries.has(cellKey(cell))
-      this.dummy.position.set(position.x,wave-this.detail*7,position.z)
+      const key=cellKey(cell)
+      const hidden=this.cards.has(key)
+      const hoverLift=this.motion.entries.get(key)?.lift??0
+      this.dummy.position.set(position.x,wave+hoverLift-this.detail*7,position.z)
       this.dummy.rotation.set(THREE.MathUtils.clamp(slope*.035,-.035,.035),0,0)
       this.dummy.scale.setScalar(hidden?0:1)
       this.dummy.updateMatrix()

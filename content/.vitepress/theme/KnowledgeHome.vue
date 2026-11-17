@@ -22,6 +22,8 @@ const groups = archive.columns.map(c => archive.records.map((r,i) => r.category 
 const lane = computed(() => archive.columns.indexOf(active.value.category))
 const row = computed(() => groups[lane.value].indexOf(selected.value))
 const hoverRecord = computed(() => hovered.value === null ? null : archive.records[hovered.value])
+const displayRecord = computed(() => mode.value === 'archive' && hoverRecord.value ? hoverRecord.value : active.value)
+const isHoverPreview = computed(() => mode.value === 'archive' && hovered.value !== null)
 const matches = computed(() => archive.records.map((r,i) => ({...r,index:i})).filter(r => (category.value === '全部' || r.category === category.value) && `${r.title} ${r.en} ${r.abstract}`.toLowerCase().includes(query.value.toLowerCase())))
 let scene, disposed = false, timer, bootTimer, keyHandler, previousFocus
 const wrap = (i,n) => ((i % n) + n) % n
@@ -42,6 +44,7 @@ function navigate(axis,direction) {
 }
 function access() {
   if(loading.value || failed.value) return
+  hovered.value = null
   mode.value = 'detail'
   scene?.setDetail(true)
 }
@@ -122,12 +125,12 @@ onUnmounted(() => {
     <div v-if="failed" class="scene-fallback" role="status"><p>当前设备未能启用三维场景，文章仍可正常阅读。</p><button @click="openIndex">浏览全部 {{archive.records.length}} 篇笔记 ↗</button><a href="/kb/topics.html">进入主题索引</a></div>
 
     <template v-if="!failed">
-      <section v-if="mode === 'archive'" class="archive-info" aria-live="polite" aria-atomic="true">
-        <div class="info-eyebrow">PERSONAL KNOWLEDGE BASE <span>/</span> {{ active.category }}</div>
-        <div class="file-number" :key="active.id">FILE NUMBER: {{ active.id }}</div>
+      <section v-if="mode === 'archive'" class="archive-info" :data-state="isHoverPreview?'hovered':'selected'" aria-live="polite" aria-atomic="true">
+        <div class="info-eyebrow">PERSONAL KNOWLEDGE BASE <span>/</span> {{ displayRecord.category }} <small class="archive-state">{{isHoverPreview?'悬停预览':'已选中'}}</small></div>
+        <div class="file-number" :key="displayRecord.id">FILE NUMBER: {{ displayRecord.id }}</div>
         <div class="file-line"><i></i><span>REFERENCE AREA</span></div>
-        <Transition name="title-roll" mode="out-in"><h1 :key="active.id">{{ active.title }}</h1></Transition>
-        <button class="access-file" @click="access" :disabled="loading">读取档案 <span>ACCESS FILE</span><b aria-hidden="true">⟶</b></button>
+        <Transition name="title-roll" mode="out-in"><h1 :key="displayRecord.id">{{ displayRecord.title }}</h1></Transition>
+        <button class="access-file" @click="access" :disabled="loading || isHoverPreview">{{isHoverPreview?'点击盘片以选中':'读取档案'}} <span>{{isHoverPreview?'HOVER PREVIEW':'ACCESS FILE'}}</span><b aria-hidden="true">⟶</b></button>
       </section>
       <Transition name="detail-reveal">
         <section v-if="mode === 'detail'" class="archive-detail" aria-labelledby="detail-title">
@@ -143,7 +146,6 @@ onUnmounted(() => {
       </Transition>
       <button v-if="mode === 'detail'" class="back-to-array" @click="back">⟵ <span>返回档案阵列</span> <kbd>ESC</kbd></button>
       <div v-if="mode === 'detail'" class="disc-inspect"><span>{{ active.id }}</span><small>拖动旋转 / DRAG TO INSPECT</small><button @click="toggleExploded">{{ exploded ? '重组档案盘' : '拆解档案盘' }} <b>{{ exploded ? '−' : '+' }}</b></button></div>
-      <div v-if="hoverRecord && mode === 'archive'" class="hover-caption">{{ hoverRecord.id }} <span>{{ hoverRecord.title }}</span></div>
     </template>
 
     <footer class="terminal-footer">

@@ -28,6 +28,9 @@ body:has(.archive-terminal) .VPContent { padding: 0 !important; }
 .archive-info { position: absolute; left: 53.8%; top: 40.5%; width: 39%; pointer-events: none; }
 .info-eyebrow { font: 10px 'Consolas',monospace; letter-spacing: .08em; color: #727469; }
 .info-eyebrow span { padding: 0 15px; }
+.archive-state { font: 8px 'Microsoft YaHei',sans-serif; color: #687552; margin-left: 12px; white-space: nowrap; }
+.archive-info[data-state="hovered"] .archive-state { color: #a27d42; }
+.archive-info[data-state="hovered"] .file-line i { background: #a27d42; }
 .file-number { font-size: clamp(20px,1.8vw,32px); font-weight: 700; letter-spacing: -.055em; margin-top: 19px; }
 .file-line { display: flex; align-items: center; position: relative; border-top: 1px solid #51564480; margin: 33px 0 19px; }
 .file-line i { position: absolute; left: -24px; top: -3px; width: 5px; height: 5px; background: #464c3f; }

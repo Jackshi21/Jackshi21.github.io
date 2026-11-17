@@ -3,6 +3,7 @@ export const COLUMN_PITCH = 4.7
 // Leave clearance for the cover and screw heads, not just the thin backplate.
 export const ROW_PITCH = .66
 export const PREVIEW_LIFT = 1.1
+export const HOVER_LIFT = .36
 export const wrap = (value, count) => ((value % count) + count) % count
 export const cellKey = cell => `${cell.lane}:${cell.row}`
 export const slotPosition = cell => ({x:(cell.lane-2)*COLUMN_PITCH,z:-cell.row*ROW_PITCH})
@@ -44,6 +45,20 @@ export class ArchiveMotion {
     this.ripples=[]
     this.time=0
     this.cell=null
+    this.hovered=null
+  }
+  hover(index,navigation) {
+    if(index===null) {this.hovered=null;return null}
+    const cell=resolveCell(this.groups,index,this.cell,navigation)
+    const key=cellKey(cell)
+    if(this.active&&key===cellKey(this.active.cell)) {this.hovered=null;return null}
+    let entry=this.entries.get(key)
+    if(!entry) {
+      entry={cell,index,lift:0,velocity:0,holdLower:false}
+      this.entries.set(key,entry)
+    }
+    this.hovered=entry
+    return entry
   }
   select(index,navigation,immediate=false) {
     const cell=resolveCell(this.groups,index,this.cell,navigation)
@@ -56,6 +71,7 @@ export class ArchiveMotion {
     this.cell=cell
     this.active=entry
     this.index=index
+    this.hovered=null
     if(!immediate) this.ripples.push({...cell,time:this.time})
     this.ripples=this.ripples.slice(-12)
     return entry
@@ -70,7 +86,7 @@ export class ArchiveMotion {
     this.time+=dt
     this.ripples=this.ripples.filter(r => this.time-r.time<3.4)
     for(const [key,entry] of this.entries) {
-      const target=entry.holdLower ? Math.max(PREVIEW_LIFT,entry.lift) : entry===this.active ? detail?3.1:PREVIEW_LIFT : 0
+      const target=entry.holdLower ? Math.max(PREVIEW_LIFT,entry.lift) : entry===this.active ? detail?3.1:PREVIEW_LIFT : entry===this.hovered?HOVER_LIFT:0
       if(reduced) { entry.lift=target;entry.velocity=0 }
       else {
         const steps=Math.max(1,Math.ceil(dt*120)),h=dt/steps
@@ -79,7 +95,7 @@ export class ArchiveMotion {
           entry.lift+=entry.velocity*h
         }
       }
-      if(entry!==this.active && !entry.holdLower && Math.abs(entry.lift)<.002 && Math.abs(entry.velocity)<.02) this.entries.delete(key)
+      if(entry!==this.active && entry!==this.hovered && !entry.holdLower && Math.abs(entry.lift)<.002 && Math.abs(entry.velocity)<.02) this.entries.delete(key)
     }
   }
   field(lane,row,reduced=false) { return reduced?0:rippleHeight(this.ripples,lane,row,this.time) }
